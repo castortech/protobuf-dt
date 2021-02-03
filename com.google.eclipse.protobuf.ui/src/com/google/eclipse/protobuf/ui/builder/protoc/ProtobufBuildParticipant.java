@@ -9,7 +9,6 @@
 package com.google.eclipse.protobuf.ui.builder.protoc;
 
 import static org.eclipse.core.resources.IResource.DEPTH_INFINITE;
-import static com.google.common.io.Closeables.closeQuietly;
 import static com.google.eclipse.protobuf.ui.builder.protoc.ConsolePrinter.createAndDisplayConsole;
 import static com.google.eclipse.protobuf.ui.preferences.compiler.CompilerPreferences.compilerPreferences;
 import static com.google.eclipse.protobuf.ui.util.IStatusFactory.error;
@@ -74,7 +73,7 @@ public class ProtobufBuildParticipant implements IXtextBuilderParticipant {
       }
       IFile protoFile = protoFile(delta.getUri(), project);
       subMonitor.worked(1);
-      if (protoFile != null) {
+      if (protoFile != null && protoFile.getLocation() != null) {
         subMonitor.subTask("Compiling " + protoFile.getName() + " with protoc");
         generateSingleProto(commandBuilder.buildCommand(protoFile), protoFile);
       }
@@ -118,9 +117,7 @@ public class ProtobufBuildParticipant implements IXtextBuilderParticipant {
   }
 
   private void processStream(InputStream stream, IFile protoFile, ConsolePrinter console) throws Throwable {
-    InputStreamReader reader = null;
-    try {
-      reader = new InputStreamReader(stream);
+	try (InputStreamReader reader = new InputStreamReader(stream)) {
       BufferedReader bufferedReader = new BufferedReader(reader);
       String line = null;
       ProtocMarkerFactory markerFactory = new ProtocMarkerFactory(protoFile);
@@ -128,8 +125,6 @@ public class ProtobufBuildParticipant implements IXtextBuilderParticipant {
         outputParser.parseAndAddMarkerIfNecessary(line, markerFactory);
         console.printProtocOutput(line);
       }
-    } finally {
-      closeQuietly(reader);
     }
   }
 

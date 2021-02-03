@@ -10,7 +10,10 @@ package com.google.eclipse.protobuf.ui.protoc.command;
 
 import static com.google.eclipse.protobuf.util.CommonWords.space;
 
+import java.util.Optional;
+
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
 
 /**
  * The command used to call protoc to compile a single .proto file.
@@ -39,6 +42,9 @@ class ProtocCommand {
   }
 
   void setFileToCompile(IFile protoFile) {
-    content.append(protoFile.getLocation().toOSString());
-  };
+	Optional.ofNullable(protoFile)
+			.map(IFile::getLocation)
+			.map(IPath::toOSString)
+			.ifPresent(content::append);
+  }
 }
