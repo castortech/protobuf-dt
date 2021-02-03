@@ -96,6 +96,10 @@
             name="org.eclipse.platform.feature.group"/>
         <requirement
             name="org.eclipse.jdt.feature.group"/>
+        <requirement
+            name="org.eclipse.ui.trace"/>	      
+    	<requirement
+            name="org.eclipse.pde.feature.group"/>		     
         <sourceLocator
             rootFolder="${git.clone.protobuf-dt.location}"/>
         <repositoryList
