@@ -64,8 +64,6 @@
       <repository
           url="http://download.itemis.com/updates/milestones/"/>
       <repository
-          url="http://download.eclipse.org/tools/cdt/builds/mars/milestones/"/>
-      <repository
           url="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
     </setupTask>
     <setupTask
@@ -122,8 +120,6 @@
               url="http://download.eclipse.org/tools/gef/gef4/updates/releases"/>
           <repository
               url="http://download.itemis.com/updates/milestones/"/>
-          <repository
-              url="http://download.eclipse.org/tools/cdt/builds/mars/milestones/"/>
           <repository
               url="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
         </repositoryList>
